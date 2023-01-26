@@ -5,23 +5,18 @@ import httpStatus from "http-status";
 
 // GET ========================================================================
 
-/* export async function getTicketTypes(req: AuthenticatedRequest, res: Response) {
+export async function getPayment(req: AuthenticatedRequest, res: Response) {
+  const { ticketId } = req.query;
+  if (!ticketId) return res.sendStatus(httpStatus.BAD_REQUEST);
+
   try {
-    const types = await ticketsService.getAllTypes();
-    return res.send(types);
+    const payment = await paymentsService.getPaymentByTicketId(+ticketId, req.userId);
+    return res.send(payment);
   } catch (error) {
-    return res.sendStatus(httpStatus.BAD_REQUEST);
+    if (error.name === "UnauthorizedError") return res.sendStatus(httpStatus.UNAUTHORIZED);
+    if (error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
-
-export async function getTicket(req: AuthenticatedRequest, res: Response) {
-  try {
-    const types = await ticketsService.getTicketByUserId(req.userId);
-    return res.send(types);
-  } catch (error) {
-    return res.sendStatus(httpStatus.NOT_FOUND);
-  }
-} */
 
 // POST =======================================================================
 

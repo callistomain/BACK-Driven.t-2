@@ -3,7 +3,7 @@ import Joi from "joi";
 export const createPaymentSchema = Joi.object({
   ticketId: Joi.number().required(),
   cardData: Joi.object({
-		issuer: Joi.string().required(),
+    issuer: Joi.string().required(),
     number: Joi.string().required(),
     name: Joi.string().required(),
     expirationDate: Joi.string().required(),
