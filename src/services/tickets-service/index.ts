@@ -16,7 +16,7 @@ async function getTicketByUserId(userId: number) {
   const ticketType = await ticketsRepository.findTicketByEnrollmentId(enrollment.id);
   if (!ticketType) throw notFoundError();
 
-  return await ticketsRepository.findByUserId(enrollment.id);
+  return await ticketsRepository.findByEnrollmentId(enrollment.id);
 }
 
 // CREATE ======================================================================
@@ -30,11 +30,11 @@ async function createTicket(params: CreateTicket, userId: number) {
   const enrollment = await enrollmentRepository.findByUserId(userId);
   if (!enrollment) throw { name: "EnrollmentNotFound" };
   
-  const createTicket = { 
+  const createTicket: CreateTicketParams = { 
     ticketTypeId,
     enrollmentId: enrollment.id,
     status: "RESERVED"
-  } as CreateTicketParams;
+  };
 
   return await ticketsRepository.insert(createTicket);
 }

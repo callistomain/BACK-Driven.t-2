@@ -17,6 +17,7 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
       abortEarly: false,
     });
 
+    
     if (!error) {
       next();
     } else {
